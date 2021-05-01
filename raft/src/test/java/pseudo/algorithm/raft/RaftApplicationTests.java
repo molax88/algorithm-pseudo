@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 import pseudo.algorithm.raft.service.HelloService;
+import pseudo.algorithm.raft.service.RaftComposeService;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class RaftApplicationTests {
@@ -26,14 +27,14 @@ class RaftApplicationTests {
         ResponseEntity<String> response = this.restTemplate.getForEntity(
                 String.format("http://127.0.0.1:%s/index/hello?string=raft", port), String.class);
         System.out.println(String.format("测试结果为：%s", response.getBody()));
-        ConsumerConfig<HelloService> consumerConfig = new ConsumerConfig<HelloService>()
-                .setInterfaceId(HelloService.class.getName()) // Specify the interface
+        ConsumerConfig<RaftComposeService> consumerConfig = new ConsumerConfig<RaftComposeService>()
+                .setInterfaceId(RaftComposeService.class.getName()) // Specify the interface
                 .setProtocol("bolt") // Specify the protocol.setDirectUrl
                 .setDirectUrl("bolt://127.0.0.1:12200"); // Specify the direct connection address
         // Generate the proxy class
-        HelloService helloService = consumerConfig.refer();
+        RaftComposeService raftComposeService = consumerConfig.refer();
         while (true) {
-            System.out.println(helloService.directSayHello("raft"));
+            System.out.println(raftComposeService.getRaftRole().getDescribe());
             try {
                 Thread.sleep(2000);
             } catch (Exception e) {

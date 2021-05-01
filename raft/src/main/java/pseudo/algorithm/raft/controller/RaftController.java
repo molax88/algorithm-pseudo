@@ -1,7 +1,4 @@
-package pseudo.algorithm.raft.domain.entity;
-
-import lombok.Data;
-import lombok.ToString;
+package pseudo.algorithm.raft.controller;
 
 /**
  * ┌─┐       ┌─┐
@@ -28,25 +25,28 @@ import lombok.ToString;
  * 代码无BUG!
  *
  * @author molax
- * @date 2021/4/22 10:58
+ * @date 2021/4/21 15:26
  */
-@Data
-public class LogEntity {
 
-    private long preIndex;
+import com.alipay.sofa.rpc.config.ConsumerConfig;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import pseudo.algorithm.raft.domain.response.LogRsp;
+import pseudo.algorithm.raft.service.HelloService;
+import pseudo.algorithm.raft.service.RaftComposeService;
+import reactor.core.publisher.Mono;
 
-    private long index;
+@RestController
+@RequestMapping("/raft")
+@RequiredArgsConstructor
+public class RaftController {
 
-    private String data;
+    private final RaftComposeService raftComposeService;
 
-    private boolean committed;
-
-    public static LogEntity of(String data){
-        return new LogEntity().setData(data).setCommitted(false);
+    @RequestMapping("/hello")
+    public Mono<LogRsp> hello(String string){
+        return raftComposeService.handleLog(string);
     }
 
-    @Override
-    public String toString(){
-        return String.format("logEntity:{index:%s,data:%s,preIndex:%s,committed:%s}", this.index, this.data, this.preIndex,this.committed);
-    }
 }

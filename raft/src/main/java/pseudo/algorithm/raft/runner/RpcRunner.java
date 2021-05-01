@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import pseudo.algorithm.raft.service.HelloService;
+import pseudo.algorithm.raft.service.RaftComposeService;
 import pseudo.algorithm.raft.service.impl.HelloServiceImpl;
 
 /**
@@ -41,10 +42,10 @@ import pseudo.algorithm.raft.service.impl.HelloServiceImpl;
 @RequiredArgsConstructor
 public class RpcRunner implements CommandLineRunner {
 
-    private final HelloService helloService;
+    private final RaftComposeService raftComposeService;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         log.info("RpcRunner init...");
         ServerConfig serverConfig = new ServerConfig()
                 // Set a protocol, which is bolt by default
@@ -54,14 +55,15 @@ public class RpcRunner implements CommandLineRunner {
                 // non-daemon thread
                 .setDaemon(false);
 
-        ProviderConfig<HelloService> providerConfig = new ProviderConfig<HelloService>()
+        ProviderConfig<RaftComposeService> providerConfig = new ProviderConfig<RaftComposeService>()
                 // Specify the interface
-                .setInterfaceId(HelloService.class.getName())
+                .setInterfaceId(RaftComposeService.class.getName())
                 // Specify the implementation
-                .setRef(helloService)
+                .setRef(raftComposeService)
                 // Specify the server
                 .setServer(serverConfig);
 
-        providerConfig.export(); // Publish service
+        // Publish service
+        providerConfig.export();
     }
 }

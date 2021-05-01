@@ -1,14 +1,9 @@
 package pseudo.algorithm.raft.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import pseudo.algorithm.raft.domain.entity.LogEntity;
-import pseudo.algorithm.raft.domain.request.LogReq;
-import pseudo.algorithm.raft.domain.request.VoteReq;
-import pseudo.algorithm.raft.domain.response.RaftLogRsp;
-import pseudo.algorithm.raft.domain.response.RaftVoteRsp;
-import pseudo.algorithm.raft.service.RaftCoreService;
+import pseudo.algorithm.raft.enums.RaftRole;
+import pseudo.algorithm.raft.service.RaftNodeService;
 import pseudo.algorithm.raft.support.RaftNode;
 
 /**
@@ -36,30 +31,21 @@ import pseudo.algorithm.raft.support.RaftNode;
  * 代码无BUG!
  *
  * @author molax
- * @date 2021/4/25 15:10
+ * @date 2021/4/26 11:40
  */
-@Slf4j
 @Service
 @RequiredArgsConstructor
-public class RaftCoreServiceImpl implements RaftCoreService {
+public class RaftNodeServiceImpl implements RaftNodeService {
 
     private final RaftNode node;
 
     @Override
-    public RaftVoteRsp election(VoteReq voteReq) {
-        return null;
+    public RaftRole getRaftRole() {
+        return node.getRole();
     }
 
     @Override
-    public RaftLogRsp appendLog(LogReq logReq) {
-        return null;
-    }
-
-    @Override
-    public LogEntity applyLog(LogEntity entity) {
-        entity.setPreIndex(node.getLastIndex()).setIndex(node.getLastIndex()+1);
-        // TODO: 2021/4/27  持久化日志
-        log.info(entity.toString());
-        return entity;
+    public void addNode(RaftNode node) {
+        this.node.getClusterNodes().put(node.getNodeId(), node);
     }
 }

@@ -30,7 +30,7 @@ import lombok.Data;
  * @date 2021/4/22 10:52
  */
 @Data
-public class VoteRsp {
+public class RaftVoteRsp {
 
     private boolean voted;
 }

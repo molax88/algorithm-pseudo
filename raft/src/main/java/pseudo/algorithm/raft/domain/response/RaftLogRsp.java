@@ -1,7 +1,6 @@
-package pseudo.algorithm.raft.domain.entity;
+package pseudo.algorithm.raft.domain.response;
 
 import lombok.Data;
-import lombok.ToString;
 
 /**
  * ┌─┐       ┌─┐
@@ -28,25 +27,12 @@ import lombok.ToString;
  * 代码无BUG!
  *
  * @author molax
- * @date 2021/4/22 10:58
+ * @date 2021/4/22 11:01
  */
 @Data
-public class LogEntity {
+public class RaftLogRsp {
 
-    private long preIndex;
+    private long logIndex;
 
-    private long index;
-
-    private String data;
-
-    private boolean committed;
-
-    public static LogEntity of(String data){
-        return new LogEntity().setData(data).setCommitted(false);
-    }
-
-    @Override
-    public String toString(){
-        return String.format("logEntity:{index:%s,data:%s,preIndex:%s,committed:%s}", this.index, this.data, this.preIndex,this.committed);
-    }
+    private boolean result;
 }
