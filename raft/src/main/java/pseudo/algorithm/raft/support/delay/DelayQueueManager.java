@@ -43,17 +43,7 @@ public class DelayQueueManager implements CommandLineRunner {
 
 	private final DelayQueue<DelayMessage> delayQueue = new DelayQueue<>();
 
-	private final SummaryMessageSendService summaryMessageSendService;
-
-	private final EmployeeFeign employeeFeign;
-
-	private final CurrentService currentService;
-
-	private final CMBNoticeService cmbNoticeService;
-
-	private final WorkflowFeign workflowFeign;
-
-	private final EmployeeExtService employeeExtService;
+	private final RaftComposeService raftComposeService;
 
 	/**
 	 * 加入到延时队列中

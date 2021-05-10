@@ -1,6 +1,5 @@
 package pseudo.algorithm.raft.support.delay;
 
-import com.dfocus.fm.common.enums.news.SummaryMessageType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
