@@ -1,2 +1,4 @@
 rootProject.name = 'algorithm-pseudo'
+include 'leetcode'
+include 'common'
 
