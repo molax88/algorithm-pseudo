@@ -19,7 +19,7 @@ public class Two {
             for (int i = 0, size = s1.length(); i < size; i++) {
                 s2.replaceFirst(String.valueOf(s1.charAt(i)), "");
             }
-            return s2.isBlank();
+            return s2.isEmpty();
         }
         return false;
     }
